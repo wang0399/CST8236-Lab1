@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include "TransformNode.h"
 
-/*CST8236 Lab1 */
+/*CST8236 Lab1 - In local repo */
 
 int main(int argc, char* argv) 
 {
@@ -28,13 +28,13 @@ int main(int argc, char* argv)
 
   bool keyHeld = false;
   bool growing = true;
-  int rorateLimit = 1200; //for body rotation range
+  int rorateLimit = 700; //for body rotation range
   int roateCounter = 0;  //for body roatation direction switching
   int roateDirection = 0; //0 for going right, -1 for going left
 
   //set body's location
-  bodyRect.setOrigin(20.0f, 20.0f);
-  bodyRect.setPosition(350, 430);
+  bodyRect.setOrigin(15.0f, 5.0f);
+  bodyRect.setPosition(300, 560);
   bodyRect.setScale(3, 3);
   bodyRect.setRotation(-90);
 
@@ -71,7 +71,7 @@ int main(int argc, char* argv)
   upperRightArmRect.setPosition(rightArmPosition);
   lowerRightArmRect.setPosition(upperRightArmRect.getLocalBounds().width, 1.0f);
   upperLeftArmRect.setPosition(leftArmPosition);
-  lowerLeftArmRect.setPosition(upperLeftArmRect.getLocalBounds().width, 1.0f);
+  lowerLeftArmRect.setPosition(upperLeftArmRect.getLocalBounds().width -2.0f, 1.0f);
 
   //transform body components
   TransformNode head(&headCircle);
@@ -113,7 +113,7 @@ int main(int argc, char* argv)
       }
     }
 
-    if (keyHeld)
+    if (!keyHeld)
     {
 		float angleAmount = 90.0f;
 		float defaultAngle = angleAmount * elaspedTime;
@@ -142,12 +142,13 @@ int main(int argc, char* argv)
 			 roateDirection = 0;			 				 
 	   }     
 	 
+		//All body components will move back and forth using body's rotation angle
 	    bodyRect.rotate(bodyAngle);
-		upperLeftArmRect.rotate(defaultAngle * -1);
-		lowerLeftArmRect.rotate(defaultAngle * -1);
-		upperRightArmRect.rotate(defaultAngle);
-		lowerRightArmRect.rotate(defaultAngle);
-		neckRect.rotate(defaultAngle);
+		upperLeftArmRect.rotate(bodyAngle * 1.2);
+		lowerLeftArmRect.rotate(bodyAngle * 2);
+		upperRightArmRect.rotate(bodyAngle * 1.75);
+		lowerRightArmRect.rotate(bodyAngle * 2);
+		neckRect.rotate(bodyAngle *-1 * 2);
 	  
     }
 
